@@ -41,3 +41,21 @@ def alterar_status_consulta(id_consulta, status):
         ''', (status, id_consulta))
         conn.commit()
         return cursor.rowcount
+    
+def listar_consulta(id_paciente):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''SELECT data, especialidade, (
+                        CASE 
+                            WHEN status = 0 THEN 'MARCADO'
+                            WHEN status = 1 THEN 'ATENDIDO'
+                            WHEN status = 2 THEN 'INTERNADO'
+                            ELSE 'CANCELADO'
+                        END
+                        ) FROM consultas WHERE id_paciente = ?''', (id_paciente,))
+        conn.commit()
+        consultas = cursor.fetchall()
+        return {
+            "consultas": [{"data": c[0], "especialidade": c[1], "status": c[2]} for c in consultas],
+        }
+    
