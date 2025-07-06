@@ -39,5 +39,11 @@ def alterar_status_consulta(id_consulta:int, status: int):
         return {"mensagem": "Atlterado status com sucesso"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-#Alterar Ainda
+    
+@router.get("/consulta/{id_paciente}")
+def listar_exame(id_paciente: int):
+    try:
+        json_consultas = models.listar_consulta(id_paciente)
+        return json_consultas
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
