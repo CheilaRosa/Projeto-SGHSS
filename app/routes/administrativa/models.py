@@ -76,3 +76,12 @@ def guarda_token(dados):
         "status": "sucesso",
         "token": save_token
     }
+
+def busca_token(token: str):                
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM administrativa WHERE token = ?', (token,))
+        row = cursor.fetchone()
+        if row:
+            return True
+        return False

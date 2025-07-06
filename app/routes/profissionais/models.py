@@ -27,6 +27,17 @@ def cadastrar_profissional(dados):
         conn.commit()
         return cursor.lastrowid
 
+def editar_profissional(id_profissional, dados):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE profissionais_saude
+            SET nome = ?, profissao = ?, registro = ?, telefone = ?, email = ?
+            WHERE id = ?
+        ''', (dados['nome'], dados['profissao'], dados['registro'], dados['telefone'], dados['email'], id_profissional))
+        conn.commit()
+        return cursor.rowcount
+
 def buscar_profissionais_por_nome(parte_nome):
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
