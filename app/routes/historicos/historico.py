@@ -4,7 +4,7 @@ from app.routes.historicos import models
 
 router = APIRouter()
 
-# Histórico Clínico:
+# Histórico Clínico paciente:
 @router.get("/historico/{id_paciente}")
 def obter_historico(id_paciente: int):
     historico = models.obter_historico_clinico(id_paciente)
