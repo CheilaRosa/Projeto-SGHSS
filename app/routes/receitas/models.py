@@ -28,4 +28,20 @@ def adicionar_receita(id_profisional,id_paciente, descricao, data):
             VALUES (?, ?, ?, ?)
         ''', (id_paciente, id_profisional, descricao, data))
         conn.commit()
+
+def excluir_receita(id: int):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM receitas WHERE id = ?', (id,))
+        conn.commit()
+
+def listar_receita(id_paciente):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT descricao, data FROM receitas WHERE id_paciente = ?', (id_paciente,))
+        conn.commit()
+        receitas = cursor.fetchall()
+        return {
+            "receitas": [{"descricao": r[0], "data": r[1]} for r in receitas],
+        }
         
