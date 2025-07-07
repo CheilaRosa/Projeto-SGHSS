@@ -15,7 +15,8 @@ def criar_tabela_internacao():
                 motivo TEXT NOT NULL,
                 status TEXT NOT NULL,
                 data_alta TEXT,
-                FOREIGN KEY(id_paciente) REFERENCES pacientes(id)
+                FOREIGN KEY(id_paciente) REFERENCES pacientes(id),
+                FOREIGN KEY (id_profissional) REFERENCES profissionais_saude(id)
             )
         ''')
         conn.commit()
