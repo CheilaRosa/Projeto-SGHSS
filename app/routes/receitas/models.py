@@ -1,4 +1,7 @@
 import sqlite3
+import hmac
+import hashlib
+import json
 
 DB_NAME = "clinica.db"
 
@@ -44,4 +47,15 @@ def listar_receita(id_paciente):
         return {
             "receitas": [{"descricao": r[0], "data": r[1]} for r in receitas],
         }
+        
+def gerar_assinatura(id_profissional, receita):
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT registro FROM profissionais_saude WHERE nome id ?
+        ''', (id_profissional))
+        rows = cursor.fetchall()
+    receita_json = json.dumps(receita, sort_keys=True).encode()
+    assinatura = hmac.new(rows[0], receita_json, hashlib.sha256).hexdigest()
+    return assinatura
         

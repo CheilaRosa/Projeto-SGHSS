@@ -29,4 +29,9 @@ def listar_exame(id_paciente: int):
         json_receitas = models.listar_receita(id_paciente)
         return json_receitas
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))    
+
+@router.post("/receita/assinatura/{id_profissional}")
+def gerar_assinatura(id_profissional: int, receita: Receita):
+    models.gerar_assinatura(id_profissional, receita.dict())
+    return {"mensagem": "Assinatura da Receita com sucesso"}
