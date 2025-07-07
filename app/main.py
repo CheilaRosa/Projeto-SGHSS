@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from app.routes import teleconsulta
 
 from app.routes.administrativa import administrativa
 from app.routes.consultas import consulta
@@ -11,6 +10,7 @@ from app.routes.pacientes import paciente
 from app.routes.profissionais import profissional
 from app.routes.prontuarios import prontuario
 from app.routes.receitas import receita
+from app.routes.teleconsulta import teleconsulta
 
 app = FastAPI(title="API Clínica Completa")
 
@@ -24,7 +24,6 @@ app.include_router(paciente.router)
 app.include_router(profissional.router)
 app.include_router(prontuario.router)
 app.include_router(receita.router)
-
 app.include_router(teleconsulta.router)
 
 @app.get("/")
