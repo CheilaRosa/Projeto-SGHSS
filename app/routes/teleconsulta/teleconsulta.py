@@ -15,7 +15,6 @@ class ProntuarioTeleconsulta(BaseModel):
     conduta: str = None
     link_teleconsulta: str = None
 
-
 @router.post("/teleconsulta/{id_teleconsulta}")
 def agendar_teleconsulta(id_teleconsulta: int):
     url = models.gerar_link_sala_teleconsulta()
